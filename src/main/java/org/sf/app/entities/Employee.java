@@ -119,14 +119,6 @@ public class Employee {
 		this.mobile = mobile;
 	}
 
-	public LocalDate getBirtDate() {
-		return birthDate;
-	}
-
-	public void setBirtDate(LocalDate birthDate) {
-		this.birthDate = birthDate;
-	}
-
 	public LocalDateTime getJoinDate() {
 		return joinDate;
 	}
