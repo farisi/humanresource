@@ -39,19 +39,14 @@ public class Employee {
     private String mobile;
     
     @Column(name="birth_date")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
     
     @Column(name="join_date")
-    //@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm", iso = ISO.DATE_TIME)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime joinDate;
     
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     @Column(name="created_at")
     private LocalDateTime createdAt=LocalDateTime.now();
     
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     @Column(name="updated_at")
     private LocalDateTime updatedAt=LocalDateTime.now();
 
@@ -86,22 +81,7 @@ public class Employee {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	public String getPlaceOfBirth() {
-		return placeOfBirth;
-	}
 
-	public void setPlaceOfBirth(String placeOfBirth) {
-		this.placeOfBirth = placeOfBirth;
-	}
-
-	public LocalDate getBirthDate() {
-		return birthDate;
-	}
-
-	public void setBirthDate(LocalDate birthDate) {
-		this.birthDate = birthDate;
-	}
 
 	public String getAddress() {
 		return address;
@@ -118,7 +98,7 @@ public class Employee {
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
-
+	//@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
 	public LocalDateTime getJoinDate() {
 		return joinDate;
 	}
@@ -142,6 +122,20 @@ public class Employee {
 	public void setUpdatedAt(LocalDateTime updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-    
-    
+
+	public String getPlaceOfBirth() {
+		return placeOfBirth;
+	}
+
+	public void setPlaceOfBirth(String placeOfBirth) {
+		this.placeOfBirth = placeOfBirth;
+	}
+
+	public LocalDate getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(LocalDate birthDate) {
+		this.birthDate = birthDate;
+	}
 }

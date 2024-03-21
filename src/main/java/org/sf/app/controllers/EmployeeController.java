@@ -33,7 +33,7 @@ public class EmployeeController {
 	}
 	
 	@PatchMapping("/{id}")
-	public Employee update(@PathVariable long id, @RequestBody Employee employee)
+	public Employee update(@PathVariable long id, @RequestBody  Employee employee)
 	{
 		Optional<Employee> updateEmploye = employeeRepo.findById(id);
 		if(updateEmploye.isPresent()) {
