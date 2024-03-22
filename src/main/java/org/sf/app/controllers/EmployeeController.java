@@ -4,16 +4,25 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+
 import org.sf.app.entities.Employee;
 import org.sf.app.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 
 @RequestMapping("/api/employes")
 @RestController
@@ -23,8 +32,34 @@ public class EmployeeController {
 	EmployeeRepository employeeRepo;
 
 	@GetMapping()
-	public List<Employee> index(){
-		return employeeRepo.findAll();
+	public Page<Employee> index(
+			@RequestParam(required = false) String keyword, @RequestParam(defaultValue = "1") int pagenum,
+			@RequestParam(defaultValue = "10") int pagesize,
+			@RequestParam(defaultValue = "firstName,asc") String[] sort
+		){
+		
+		String sortField = sort[0];
+		String sortDirection = sort[1];
+			
+		Direction direction;
+		if (sortDirection.equals("desc")) {
+			direction = Sort.Direction.DESC;
+		} else {
+			direction = Sort.Direction.ASC;
+		}
+		Order order = new Order(direction, sortField);
+
+		Pageable pageable = PageRequest.of(pagenum - 1, pagesize, Sort.by(order));
+
+		Page<Employee> pageEmployee;
+		
+		if (keyword == null) {
+			pageEmployee = employeeRepo.findAll(pageable);
+		} else {
+			pageEmployee = employeeRepo.findByKeyword(keyword,pageable);
+		}
+
+		return pageEmployee;
 	}
 	
 	@PostMapping()
