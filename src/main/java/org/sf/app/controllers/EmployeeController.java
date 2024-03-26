@@ -71,8 +71,9 @@ public class EmployeeController {
 	public Employee update(@PathVariable long id, @RequestBody  Employee employee)
 	{
 		Optional<Employee> updateEmploye = employeeRepo.findById(id);
+		Employee uEmp=null;
 		if(updateEmploye.isPresent()) {
-			Employee uEmp = updateEmploye.get();
+			uEmp = updateEmploye.get();
 			uEmp.setAddress(employee.getAddress());
 			uEmp.setFirstName(employee.getFirstName());
 			uEmp.setLastName(employee.getLastName());
@@ -83,6 +84,6 @@ public class EmployeeController {
 			uEmp.setUpdatedAt(LocalDateTime.now());
 			return employeeRepo.save(uEmp);
 		}
-		return null;
+		return uEmp;
 	}
 }

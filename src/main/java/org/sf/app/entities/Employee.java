@@ -37,7 +37,7 @@ public class Employee {
     private LocalDate birthDate;
     
     @Column(name="join_date")
-    private LocalDateTime joinDate;
+    private LocalDate joinDate;
     
     @Column(name="created_at")
     private LocalDateTime createdAt=LocalDateTime.now();
@@ -94,11 +94,11 @@ public class Employee {
 		this.mobile = mobile;
 	}
 	//@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-	public LocalDateTime getJoinDate() {
+	public LocalDate getJoinDate() {
 		return joinDate;
 	}
 
-	public void setJoinDate(LocalDateTime joinDate) {
+	public void setJoinDate(LocalDate joinDate) {
 		this.joinDate = joinDate;
 	}
 
