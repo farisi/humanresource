@@ -88,6 +88,7 @@ public class EmployeeController {
 			uEmp.setPlaceOfBirth(employee.getPlaceOfBirth());
 			uEmp.setBirthDate(employee.getBirthDate());
 			uEmp.setUpdatedAt(LocalDateTime.now());
+			uEmp.setSalary(employee.getSalary());
 			return employeeRepo.save(uEmp);
 		}
 		return uEmp;
