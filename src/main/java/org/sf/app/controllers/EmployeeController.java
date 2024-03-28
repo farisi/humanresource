@@ -73,6 +73,11 @@ public class EmployeeController {
 		return employeeRepo.save(employee);		
 	}
 	
+	@GetMapping("/{id}")
+	public Employee show(@PathVariable long id) {
+		return employeeRepo.findById(id).orElseThrow();
+	}
+	
 	@PatchMapping("/{id}")
 	public Employee update(@PathVariable long id, @RequestBody  Employee employee)
 	{
@@ -106,7 +111,7 @@ public class EmployeeController {
 		}
 	}
 	
-	@PostMapping("/{id}/store0")
+	@PostMapping("/{id}/store")
 	public JobExperience addJobExperience(@PathVariable Long id, @RequestBody JobExperience je) {
 		Optional<Employee> updateEmploye = employeeRepo.findById(id);
 		je.setEmployee(updateEmploye.get());
