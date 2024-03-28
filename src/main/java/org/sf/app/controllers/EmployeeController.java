@@ -6,13 +6,16 @@ import java.util.Optional;
 
 
 import org.sf.app.entities.Employee;
+import org.sf.app.entities.JobExperience;
 import org.sf.app.repositories.EmployeeRepository;
+import org.sf.app.repositories.JobExperienceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +33,9 @@ public class EmployeeController {
 	
 	@Autowired
 	EmployeeRepository employeeRepo;
+	
+	@Autowired
+	JobExperienceRepository jeRepo;
 
 	@GetMapping()
 	public Page<Employee> index(
@@ -85,5 +91,24 @@ public class EmployeeController {
 			return employeeRepo.save(uEmp);
 		}
 		return uEmp;
+	}
+	
+	@DeleteMapping("/{id}")
+	public Boolean delete(@PathVariable Long id) {
+		Optional<Employee> updateEmploye = employeeRepo.findById(id);
+		if(updateEmploye.isPresent()) {
+			employeeRepo.delete(updateEmploye.get());
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	@PostMapping("/{id}/store0")
+	public JobExperience addJobExperience(@PathVariable Long id, @RequestBody JobExperience je) {
+		Optional<Employee> updateEmploye = employeeRepo.findById(id);
+		je.setEmployee(updateEmploye.get());
+		return jeRepo.save(je);
 	}
 }

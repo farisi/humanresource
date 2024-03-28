@@ -2,12 +2,14 @@ package org.sf.app.entities;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -33,11 +35,17 @@ public class Employee {
     
     private String mobile;
     
+    @Column(columnDefinition = "double default 0.0")
+    private Double salary=0.0;
+    
     @Column(name="birth_date")
     private LocalDate birthDate;
     
     @Column(name="join_date")
     private LocalDate joinDate;
+    
+    @OneToMany(mappedBy = "employee")
+    private List<JobExperience> jobExperiences;
     
     @Column(name="created_at")
     private LocalDateTime createdAt=LocalDateTime.now();
@@ -132,5 +140,21 @@ public class Employee {
 
 	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
+	}
+
+	public List<JobExperience> getJobExperiences() {
+		return jobExperiences;
+	}
+
+	public void setJobExperiences(List<JobExperience> jobExperiences) {
+		this.jobExperiences = jobExperiences;
+	}
+
+	public Double getSalary() {
+		return salary;
+	}
+
+	public void setSalary(Double salary) {
+		this.salary = salary;
 	}
 }
