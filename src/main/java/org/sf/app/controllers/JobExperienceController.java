@@ -1,9 +1,10 @@
 package org.sf.app.controllers;
 
-import org.hibernate.Hibernate;
+import java.util.Optional;
+
+import org.sf.app.entities.Employee;
 import org.sf.app.entities.JobExperience;
 import org.sf.app.repositories.JobExperienceRepository;
-import org.sf.app.services.JobExperienceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class JobExperienceController {
 	
 	@Autowired
-	JobExperienceService jeSrv;
+	JobExperienceRepository jeRepo;
 	
 	Logger logger = LoggerFactory.getLogger(JobExperienceController.class);
 
@@ -48,11 +52,33 @@ public class JobExperienceController {
 		
 		Page<JobExperience> jobExperiecePage;
 		if (keyword == null) {
-			jobExperiecePage = jeSrv.findAll(pageable);
+			jobExperiecePage = jeRepo.findAll(pageable);
 		} else {
-			jobExperiecePage = jeSrv.findByKeyword(keyword,pageable);
+			jobExperiecePage = jeRepo.findByKeyword(keyword,pageable);
 		}
 		
 		return jobExperiecePage;
+	}
+	
+	@GetMapping("/{id}")
+	public JobExperience show(@PathVariable Integer id) {
+		return jeRepo.findById(id).orElseThrow(null);
+	}
+	
+	@PatchMapping("/{id}")
+	public JobExperience update(@PathVariable Integer id, @RequestBody JobExperience jobExperience) {
+		Optional<JobExperience> jeOptional = jeRepo.findById(id);
+		JobExperience jobExp=null;
+		if(jeOptional.isPresent()) {
+			jobExp=jeOptional.get();
+			jobExp.setId(jobExperience.getId());
+			jobExp.setCompanyName(jobExperience.getCompanyName());
+			jobExp.setPosition(jobExperience.getPosition());
+			jobExp.setEmployee(jobExperience.getEmployee());
+			jobExp.setStartYear(jobExperience.getStartYear());
+			jobExp.setEndYear(jobExperience.getEndYear());
+			return jeRepo.save(jobExp);
+		}
+		return jobExp;
 	}
 }
