@@ -1,7 +1,9 @@
 package org.sf.app.entities;
 
 import java.time.LocalDateTime;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,17 +20,20 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+	@Column(unique = true,nullable = false)
 	private String email;
-	private String name;
 	
+	@Column(nullable=false)
 	@JsonIgnore
 	private String password;
-	private String username;
 	
 	@JsonIgnore
 	@Transient
 	private String password_confirm;
 	
+	@Column(name="is_enabled")
+	private boolean isEnabled=true;
+		
 	@Column(name="created_at")
 	private LocalDateTime createdAt;
 	
@@ -50,29 +55,13 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
+	
 	public String getPassword() {
 		return password;
 	}
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
 	}
 
 	public String getPassword_confirm() {
@@ -97,5 +86,13 @@ public class User {
 
 	public void setUpdatedAt(LocalDateTime updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public boolean isEnabled() {
+		return isEnabled;
+	}
+
+	public void setEnabled(boolean isEnabled) {
+		this.isEnabled = isEnabled;
 	}
 }

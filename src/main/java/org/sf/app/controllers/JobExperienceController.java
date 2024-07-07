@@ -2,7 +2,6 @@ package org.sf.app.controllers;
 
 import java.util.Optional;
 
-import org.sf.app.entities.Employee;
 import org.sf.app.entities.JobExperience;
 import org.sf.app.repositories.JobExperienceRepository;
 import org.slf4j.Logger;
@@ -14,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -80,5 +80,15 @@ public class JobExperienceController {
 			return jeRepo.save(jobExp);
 		}
 		return jobExp;
+	}
+	
+	@DeleteMapping("/{id}")
+	public void destroy(@PathVariable Integer id) {
+		Optional<JobExperience> jeOptional = jeRepo.findById(id);
+		JobExperience jobExp=null;
+		if(jeOptional.isPresent()) {
+			jobExp=jeOptional.get();
+			jeRepo.delete(jobExp);
+		}
 	}
 }
