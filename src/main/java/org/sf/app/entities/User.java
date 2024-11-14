@@ -39,6 +39,31 @@ public class User {
 	
 	@Column(name="updated_at")
 	private LocalDateTime updatedAt;
+	
+	public User() {}
+
+	public User(Integer id, String email, String password, String password_confirm, boolean isEnabled,
+			LocalDateTime createdAt, LocalDateTime updatedAt) {
+		super();
+		this.id = id;
+		this.email = email;
+		this.password = password;
+		this.password_confirm = password_confirm;
+		this.isEnabled = isEnabled;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+	}
+	
+	public User(Integer id, String email, boolean isEnabled, LocalDateTime createdAt, LocalDateTime updatedAt) {
+		super();
+		this.id = id;
+		this.email = email;
+		this.isEnabled = isEnabled;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+	}
+
+
 
 	public Integer getId() {
 		return id;

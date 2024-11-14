@@ -2,6 +2,7 @@ package org.sf.app.controllers;
 
 import java.util.Optional;
 
+import org.sf.app.DTO.UserDetailDTO;
 import org.sf.app.entities.UserDetail;
 import org.sf.app.requesters.users.UserStore;
 import org.sf.app.services.UserDetailService;
@@ -16,7 +17,6 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,12 +38,17 @@ public class UserController {
 	Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	@GetMapping()
-	public Page<UserDetail> index(
+	public Page<UserDetailDTO> index(
 			@RequestParam(required = false) String keyword, @RequestParam(defaultValue = "1") int pagenum,
 			@RequestParam(defaultValue = "10") int pagesize,
 			@RequestParam(defaultValue = "firstName,asc") String[] sort){
 		String sortField = sort[0];
 		String sortDirection = sort[1];
+		
+		if(pagenum==0) {
+			System.out.println(" pagenum di set " + pagenum);
+			pagenum=1;
+		}
 			
 		Direction direction;
 		if (sortDirection.equals("desc")) {
@@ -55,7 +60,7 @@ public class UserController {
 
 		Pageable pageable = PageRequest.of(pagenum - 1, pagesize, Sort.by(order));
 
-		Page<UserDetail> pageUser;
+		Page<UserDetailDTO> pageUser;
 		
 
 		if (keyword == null) {
@@ -63,7 +68,7 @@ public class UserController {
 		} else {
 			pageUser = usrDtlSrv.findByKeyword(keyword,pageable);
 		}
-
+		
 		return pageUser;
 	}
 	

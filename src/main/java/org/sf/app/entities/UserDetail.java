@@ -53,6 +53,26 @@ public class UserDetail {
 		
 	@Column(name="updated_at")
 	private LocalDateTime updatedAt;
+	
+	public UserDetail() {}
+	
+	public UserDetail(Integer id, String firstName, String lastName, String foto, String placeOfBirth, String address,
+			String mobile, User user, LocalDate birthDate, LocalDate joinDate, LocalDateTime createdAt,
+			LocalDateTime updatedAt) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.foto = foto;
+		this.placeOfBirth = placeOfBirth;
+		this.address = address;
+		this.mobile = mobile;
+		this.user = user;
+		this.birthDate = birthDate;
+		this.joinDate = joinDate;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+	}
 
 	public Integer getId() {
 		return id;

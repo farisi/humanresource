@@ -3,8 +3,10 @@ package org.sf.app.services;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import org.sf.app.DTO.UserDetailDTO;
 import org.sf.app.entities.User;
 import org.sf.app.entities.UserDetail;
+import org.sf.app.helpers.UserDetailMapper;
 import org.sf.app.repositories.UserDetailRepository;
 import org.sf.app.requesters.users.UserStore;
 import org.sf.app.requesters.users.UserUpdating;
@@ -72,9 +74,11 @@ public class UserDetailSrvImpl implements UserDetailService {
 
 	@Transactional(readOnly = true)
 	@Override
-	public Page<UserDetail> all(Pageable pageable) {
+	public Page<UserDetailDTO> all(Pageable pageable) {
 		// TODO Auto-generated method stub
-		return usrDtlRepo.findAll(pageable);
+		Page<UserDetailDTO> udList = usrDtlRepo.all(pageable);
+		
+		return udList;
 	}
 
 	@Override
@@ -91,7 +95,7 @@ public class UserDetailSrvImpl implements UserDetailService {
 	
 	@Transactional(readOnly = true)
 	@Override
-	public Page<UserDetail> findByKeyword(String keyword, Pageable pageable) {
+	public Page<UserDetailDTO> findByKeyword(String keyword, Pageable pageable) {
 		// TODO Auto-generated method stub
 		return usrDtlRepo.findByKeyword(keyword,pageable);
 	}

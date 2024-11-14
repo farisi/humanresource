@@ -52,6 +52,26 @@ public class Employee {
     
     @Column(name="updated_at")
     private LocalDateTime updatedAt=LocalDateTime.now();
+    
+    public Employee() {}
+
+	public Employee(Long id, String firstName, String lastName, String email, String placeOfBirth, String address,
+			String mobile, Double salary, LocalDate birthDate, LocalDate joinDate, LocalDateTime createdAt,
+			LocalDateTime updatedAt) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.placeOfBirth = placeOfBirth;
+		this.address = address;
+		this.mobile = mobile;
+		this.salary = salary;
+		this.birthDate = birthDate;
+		this.joinDate = joinDate;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+	}
 
 	public Long getId() {
 		return id;

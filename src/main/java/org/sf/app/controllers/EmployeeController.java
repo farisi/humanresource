@@ -40,6 +40,10 @@ public class EmployeeController {
 			@RequestParam(defaultValue = "firstName,asc") String[] sort
 		){
 		
+		if(pagenum==0) {
+			pagenum=1;
+		}
+		
 		String sortField = sort[0];
 		String sortDirection = sort[1];
 			
