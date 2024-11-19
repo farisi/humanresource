@@ -15,8 +15,9 @@ public class ResourceServerConfig {
 	
 	@Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.securityMatcher("/hrapp/**")
-          .authorizeHttpRequests(authorize -> authorize.anyRequest()
+        http.securityMatcher("/api/**")
+          .authorizeHttpRequests(authorize -> 
+              authorize.anyRequest()
             .authenticated())
           .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
           .addFilterBefore(new CommonsRequestLoggingFilter(), UsernamePasswordAuthenticationFilter.class);
